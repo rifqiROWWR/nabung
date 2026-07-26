@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Providers;
+
+use App\Listeners\LogSuccessfulLogin;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        //
+    }
+
+    public function boot(): void
+    {
+        Event::listen(Login::class, [LogSuccessfulLogin::class, 'handleLogin']);
+        Event::listen(Logout::class, [LogSuccessfulLogin::class, 'handleLogout']);
+    }
+}
